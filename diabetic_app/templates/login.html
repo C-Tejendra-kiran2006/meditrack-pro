@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MediTrack Pro — Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --navy: #050e2b;
+  --blue: #0a2463;
+  --accent: #00d4ff;
+  --accent2: #00ff99;
+  --card: rgba(255,255,255,0.04);
+  --border: rgba(0,212,255,0.2);
+  --text: #e8f4ff;
+  --muted: rgba(232,244,255,0.5);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  overflow: hidden;
+}
+
+/* Animated background */
+.bg-grid {
+  position: fixed; inset: 0;
+  background-image: 
+    linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridShift 20s linear infinite;
+}
+@keyframes gridShift { 0% { transform: translateY(0); } 100% { transform: translateY(50px); } }
+
+.bg-glow {
+  position: fixed;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.15;
+  animation: float 8s ease-in-out infinite;
+}
+.bg-glow-1 { background: var(--accent); top: -200px; left: -200px; }
+.bg-glow-2 { background: #4f46e5; bottom: -200px; right: -200px; animation-delay: 4s; }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-30px)} }
+
+/* Split layout */
+.left-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+  position: relative;
+  z-index: 1;
+}
+.right-panel {
+  width: 480px;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(20px);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 50px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 50px;
+  align-self: flex-start;
+}
+.logo-icon {
+  width: 52px; height: 52px;
+  background: linear-gradient(135deg, var(--accent), #4f46e5);
+  border-radius: 14px;
+  display: flex; align-items:center; justify-content:center;
+  font-size: 22px;
+}
+.logo-text { font-family: 'Syne', sans-serif; }
+.logo-text span:first-child { display: block; font-size: 20px; font-weight: 800; color: #fff; }
+.logo-text span:last-child { font-size: 12px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; }
+
+/* Hero text */
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+.hero h1 .accent { color: var(--accent); }
+.hero p { color: var(--muted); font-size: 17px; line-height: 1.7; max-width: 440px; margin-bottom: 40px; }
+
+/* Stats */
+.stats-row {
+  display: flex;
+  gap: 30px;
+}
+.stat-item { text-align: center; }
+.stat-item .num {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--accent);
+}
+.stat-item .label { font-size: 12px; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+
+/* Form */
+.form-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.form-subtitle { color: var(--muted); font-size: 14px; margin-bottom: 36px; }
+
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 8px; letter-spacing: 0.5px; text-transform: uppercase; }
+.input-wrap { position: relative; }
+.input-wrap i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--accent); font-size: 15px; }
+.form-control {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px 14px 46px;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  transition: all 0.3s;
+  outline: none;
+}
+.form-control:focus {
+  border-color: var(--accent);
+  background: rgba(0,212,255,0.06);
+  box-shadow: 0 0 0 4px rgba(0,212,255,0.1);
+}
+.form-control::placeholder { color: var(--muted); }
+
+.btn-login {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, var(--accent), #4f46e5);
+  border: none;
+  border-radius: 12px;
+  color: var(--navy);
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 8px;
+  letter-spacing: 0.5px;
+}
+.btn-login:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(0,212,255,0.3); }
+
+.divider { display: flex; align-items: center; gap: 12px; margin: 24px 0; color: var(--muted); font-size: 13px; }
+.divider::before,.divider::after { content:''; flex:1; height:1px; background: var(--border); }
+
+.link-register { color: var(--accent); text-decoration: none; font-weight: 500; }
+.link-register:hover { text-decoration: underline; }
+.register-prompt { text-align: center; font-size: 14px; color: var(--muted); }
+
+/* Alert */
+.alert {
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  border-left: 3px solid;
+}
+.alert-danger { background: rgba(239,68,68,0.1); border-color: #ef4444; color: #fca5a5; }
+.alert-success { background: rgba(0,255,153,0.1); border-color: var(--accent2); color: var(--accent2); }
+
+/* Pulse animation */
+.pulse-ring {
+  position: absolute;
+  right: 60px; bottom: 80px;
+  width: 200px; height: 200px;
+  opacity: 0.1;
+}
+.pulse-ring circle { animation: pulse 3s ease-out infinite; }
+.pulse-ring circle:nth-child(2) { animation-delay: 1s; }
+.pulse-ring circle:nth-child(3) { animation-delay: 2s; }
+@keyframes pulse { 0%{r:30;opacity:1} 100%{r:100;opacity:0} }
+
+@media (max-width: 900px) {
+  .left-panel { display: none; }
+  .right-panel { width: 100%; padding: 40px 30px; }
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
+
+<!-- Left Panel -->
+<div class="left-panel">
+  <div class="logo">
+    <div class="logo-icon">❤️</div>
+    <div class="logo-text">
+      <span>MediTrack Pro</span>
+      <span>Hospital Intelligence</span>
+    </div>
+  </div>
+  <div class="hero">
+    <h1>AI-Powered <span class="accent">Diabetes</span><br>Management Platform</h1>
+    <p>Real-time health monitoring, ML risk prediction, IoT vitals tracking, and AI diet planning — all in one clinical-grade platform.</p>
+    <div class="stats-row">
+      <div class="stat-item"><div class="num">99.2%</div><div class="label">Prediction Accuracy</div></div>
+      <div class="stat-item"><div class="num">24/7</div><div class="label">IoT Monitoring</div></div>
+      <div class="stat-item"><div class="num">AI</div><div class="label">Gemini Powered</div></div>
+    </div>
+  </div>
+  <svg class="pulse-ring" viewBox="0 0 200 200">
+    <circle cx="100" cy="100" r="30" fill="none" stroke="#00d4ff" stroke-width="2"/>
+    <circle cx="100" cy="100" r="30" fill="none" stroke="#00d4ff" stroke-width="2"/>
+    <circle cx="100" cy="100" r="30" fill="none" stroke="#00d4ff" stroke-width="2"/>
+  </svg>
+</div>
+
+<!-- Right Panel (Login Form) -->
+<div class="right-panel">
+  <div class="form-title">Welcome Back</div>
+  <div class="form-subtitle">Sign in to your patient dashboard</div>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }}"><i class="fas fa-circle-exclamation"></i> {{ message }}</div>
+    {% endfor %}
+  {% endwith %}
+
+  <form method="POST">
+    <div class="form-group">
+      <label>Username</label>
+      <div class="input-wrap">
+        <i class="fas fa-user"></i>
+        <input type="text" name="username" class="form-control" placeholder="Enter your username" required autocomplete="username">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <div class="input-wrap">
+        <i class="fas fa-lock"></i>
+        <input type="password" name="password" class="form-control" placeholder="Enter your password" required autocomplete="current-password">
+      </div>
+    </div>
+    <button type="submit" class="btn-login">
+      <i class="fas fa-arrow-right-to-bracket"></i> Sign In to Dashboard
+    </button>
+  </form>
+
+  <div class="divider">or</div>
+  <div class="register-prompt">
+    New patient? <a href="/register" class="link-register">Create an account →</a>
+  </div>
+</div>
+</body>
+</html>
