@@ -800,9 +800,9 @@ def analytics():
 @app.context_processor
 def inject_now():
     return {'now': datetime.now()}
-
 # ── MAIN ──────────────────────────────────────────────────────────────────────
+init_db()
+
 if __name__ == '__main__':
-    init_db()
     print("🚀 MediTrack Pro → http://localhost:8080")
     app.run(host='0.0.0.0', port=8080, debug=True)
