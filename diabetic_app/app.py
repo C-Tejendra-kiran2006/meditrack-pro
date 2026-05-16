@@ -40,7 +40,8 @@ DB = "database.db"
 
 # ── DATABASE ──────────────────────────────────────────────────────────────────
 def get_db():
-    conn = sqlite3.connect(DB)
+    # Adding timeout=30 tells SQLite to wait up to 30 seconds for locks to clear
+    conn = sqlite3.connect(DB, timeout=30)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA journal_mode=WAL")
     return conn
